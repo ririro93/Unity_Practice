@@ -1,0 +1,409 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fl",
+				"float"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"cu",
+				"currentNumber\tfloat"
+			],
+			[
+				"Unity",
+				"UnityEngine\tUnityEngine"
+			],
+			[
+				"count",
+				"CountText\tText"
+			],
+			[
+				"Vec",
+				"Vector3()\tVector3()"
+			],
+			[
+				"GetA",
+				"GetAxis(string axisName)\tfloat"
+			],
+			[
+				"Ve",
+				"Vector3()\tVector3()"
+			],
+			[
+				"Vet",
+				"Vector3\tVector3"
+			],
+			[
+				"sphere",
+				"sphereDir\tVector3"
+			],
+			[
+				"Get",
+				"GetComponent(string type)\tComponent"
+			],
+			[
+				"ve",
+				"Vector3\tVector3"
+			],
+			[
+				"randF",
+				"randFloatZ\tfloat"
+			],
+			[
+				"Vect",
+				"Vector3\tVector3"
+			],
+			[
+				"Spawn",
+				"SpawnRandom()\tvoid"
+			],
+			[
+				"spa",
+				"spawnPos\tTransform"
+			],
+			[
+				"Ke",
+				"KeyCode\tKeyCode"
+			],
+			[
+				"Co",
+				"Collision\tCollision"
+			],
+			[
+				"Des",
+				"Destruction()\tvoid"
+			],
+			[
+				"li",
+				"lifeTime\tfloat"
+			],
+			[
+				"spawn",
+				"spawnPos"
+			],
+			[
+				"sp",
+				"spawnPos"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Assets/Scripts/PlayerController.cs",
+			"settings":
+			{
+				"buffer_size": 635,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\n\n/** Generic functions for parent Agent class.\n * Contains all logic for Brain-Agent communication and Agent-Environment \n * interaction.\n */\npublic abstract class Agent : MonoBehaviour\n{\n    public Brain brain;\n    /**<  \\brief  The brain that will control this agent. */\n    /**< Use the inspector to drag the desired brain gameObject into\n\t * the Brain field */\n\n    public List<Camera> observations;\n    /**<  \\brief  The list of the cameras the Agent uses as observations. */\n    /**< These cameras will be used to generate the observations */\n\n    public int maxStep;\n    /**<  \\brief  The number of steps the agent takes before being done. */\n    /**< If set to 0, the agent can only be set to done via a script.\n    * If set to any positive integer, the agent will be set to done after that\n    * many steps each episode. */\n\n    public bool resetOnDone = true;\n    /**<  \\brief Determines the behaviour of the Agent when done.*/\n    /**< If true, the agent will reset when done. \n\t * If not, the agent will remain done, and no longer take actions.*/\n\n    [HideInInspector]\n    public float reward;\n    public\n    /**< \\brief Describes the reward for the given step of the agent.*/\n    /**< It is reset to 0 at the beginning of every step. \n\t* Modify in AgentStep(). \n\t* Should be set to positive to reinforcement desired behavior, and\n\t* set to a negative value to punish undesireable behavior.\n    * Additionally, the magnitude of the reward should not exceed 1.0 */\n\n    [HideInInspector]\n    public bool done;\n    /**< \\brief Whether or not the agent is done*/\n    /**< Set to true when the agent has acted in some way which ends the \n\t * episode for the given agent. */\n\n    [HideInInspector]\n    public float value;\n    /**< \\brief The current value estimate of the agent */\n    /**<  When using an External brain, you can pass value estimates to the\n\t * agent at every step using env.Step(actions, values).\n\t * If AgentMonitor is attached to the Agent, this value will be displayed.*/\n\n    [HideInInspector]\n    public float CummulativeReward;\n    /**< \\brief Do not modify: This keeps track of the cummulative reward.*/\n\n    [HideInInspector]\n    public int stepCounter;\n    /**< \\brief Do not modify: This keeps track of the number of steps taken by\n     * the agent each episode.*/\n\n    [HideInInspector]\n    public float[] agentStoredAction;\n    /**< \\brief Do not modify: This keeps track of the last actions decided by\n     * the brain.*/\n\n    [HideInInspector]\n    public float[] memory;\n    /**< \\brief Do not modify directly: This is used by the brain to store \n     * information about the previous states of the agent*/\n\n    [HideInInspector]\n    public int id;\n    /**< \\brief Do not modify : This is the unique Identifier each agent \n     * receives at initialization. It is used by the brain to identify\n     * the agent.*/\n\n    void OnEnable()\n    {\n        id = gameObject.GetInstanceID();\n        if (brain != null)\n        {\n            brain.agents.Add(id, gameObject.GetComponent<Agent>());\n            agentStoredAction = new float[brain.brainParameters.actionSize];\n            memory = new float[brain.brainParameters.memorySize];\n        }\n        InitializeAgent();\n    }\n\n    void OnDisable()\n    {\n        //Remove the agent from the list of agents of the brain\n        brain.agents.Remove(id);\n    }\n\n    /// When GiveBrain is called, the agent unsubscribes from its \n    /// previous brain and subscribes to the one passed in argument.\n    /** Use this method to provide a brain to the agent via script. \n\t * Do not modify brain directly.\n\t@param b The Brain component the agent will subscribe to.*/\n    public void GiveBrain(Brain b)\n    {\n        RemoveBrain();\n        brain = b;\n        brain.agents.Add(id, gameObject.GetComponent<Agent>());\n        agentStoredAction = new float[brain.brainParameters.actionSize];\n        memory = new float[brain.brainParameters.memorySize];\n    }\n\n    /// When RemoveBrain is called, the agent unsubscribes from its brain.\n    /** Use this method to give a brain to an agent via script. \n\t * Do not modify brain directly.\n\t * If an agent does not have a brain, it will not update its actions.*/\n    public void RemoveBrain()\n    {\n        if (brain != null)\n        {\n            brain.agents.Remove(id);\n        }\n    }\n\n    /// Initialize the agent with this method\n    /** Must be implemented in agent-specific child class.\n\t *  This method called only once when the agent is enabled.\n\t*/\n    public virtual void InitializeAgent()\n    {\n\n    }\n\n    /// Collect the states of the agent with this method\n    /** Must be implemented in agent-specific child class.\n\t *  This method called at every step and collects the state of the agent.\n\t *  The lenght of the output must be the same length as the state size field\n\t *  in the brain parameters of the brain the agent subscribes to.\n\t *  Note : The order of the elements in the state list is important.\n\t *  @returns state A list of floats corresponding to the state of the agent. \n\t*/\n    public virtual List<float> CollectState()\n    {\n        List<float> state = new List<float>();\n        return state;\n    }\n\n    /// Defines agent-specific behavior at every step depending on the action.\n    /** Must be implemented in agent-specific child class.\n\t *  Note: If your state is discrete, you need to convert your \n\t *  state into a list of float with length 1.\n\t *  @param action The action the agent receives from the brain. \n\t*/\n    public virtual void AgentStep(float[] action)\n    {\n\n    }\n\n\n    /// Defines agent-specific behaviour when done\n    /** Must be implemented in agent-specific child class. \n\t *  Is called when the Agent is done if ResetOneDone is false.\n\t *  The agent will remain done.\n\t *  You can use this method to remove the agent from the scene. \n\t*/\n    public virtual void AgentOnDone()\n    {\n\n    }\n\n    /// Defines agent-specific reset logic\n    /** Must be implemented in agent-specific child class. \n\t *  Is called when the academy is done.  \n\t *  Is called when the Agent is done if ResetOneDone is true.\n\t*/\n    public virtual void AgentReset()\n    {\n\n    }\n\n    /// Do not modify : Is used by the brain to reset the agent.\n    public void Reset()\n    {\n        memory = new float[brain.brainParameters.memorySize];\n        CummulativeReward = 0f;\n        stepCounter = 0;\n        AgentReset();\n    }\n\n    /// Do not modify : Is used by the brain to collect rewards.\n    public float CollectReward()\n    {\n        return reward;\n    }\n\n    /// Do not modify : Is used by the brain to collect done.\n    public bool CollectDone()\n    {\n        return done;\n    }\n\n    /// Do not modify : Is used by the brain give new action to the agent.\n    public void UpdateAction(float[] a)\n    {\n        agentStoredAction = a;\n    }\n\n    /// Do not modify : Is used by the brain to make the agent perform a step.\n    public void Step()\n    {\n        AgentStep(agentStoredAction);\n        stepCounter += 1;\n        CummulativeReward += reward;\n        if ((stepCounter > maxStep) && (maxStep > 0))\n        {\n            done = true;\n        }\n    }\n\n    /// Do not modify : Is used by the brain to reset the Reward.\n    public void ResetReward()\n    {\n        reward = 0;\n    }\n\n}\n",
+			"file": "/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Scripts/Agent.cs",
+			"file_size": 7308,
+			"file_write_time": 131551217520000000,
+			"settings":
+			{
+				"buffer_size": 7316,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "in",
+		"selected_items":
+		[
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"mater",
+				"Activate Materialize Theme"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: li",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Install Package Control"
+			]
+		],
+		"width": 444.0
+	},
+	"console":
+	{
+		"height": 150.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Scripts"
+	],
+	"file_history":
+	[
+		"/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Scripts/Decision.cs",
+		"/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Scripts/Agent.cs",
+		"/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Scripts/NumberDemoAgent.cs",
+		"/D/Project_drone/1_unity_sample/2. drone_rl_ver_1/drone rl ver_1/Assets/Scripts/DroneAgent.cs",
+		"/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/unity-environment.sln",
+		"/D/Project_drone/1_unity_sample/Sample rein_learning/Sample rein_learning.sln",
+		"/D/Project_drone/1_unity_sample/0_sample_rein_learn/0_sample_rein_learn.sln",
+		"/D/Project_drone/1_unity_sample/1. roll a ball/1.roll a ball.sln",
+		"/D/Project_drone/1_unity_sample/1. roll a ball/1. roll a ball.sln",
+		"/D/Project_drone/1_unity_sample/0_sample_rein_learn/Assets/Scripts/SpawnerControl.cs",
+		"/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Examples/3DBall/Scripts/Ball3DAcademy.cs",
+		"/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Scripts/Academy.cs",
+		"/D/Project_drone/1_unity_sample/0_sample_rein_learn/Assets/Scripts/Spawner.cs",
+		"/D/Project_drone/1_unity_sample/1. roll a ball/Assets/Scripts/Playercontroller.cs",
+		"/D/Project_drone/1_unity_sample/0_sample_rein_learn/sample.sublime-project",
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/6-deep-sarsa/deep_sarsa_agent.py",
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/6-deep-sarsa/environment.py",
+		"/D/3학기/NLP/nlp_final_assignment_toy_exam_v0.1/parsing_copy.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/06_q_net_frozenlake.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/03_2_q_table_frozenlake_det.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/05_0_q_table_frozenlake.py",
+		"/C/Users/User/reinforcement_learning/_mypractice/RL_for_everyone/1_practice_windows.py",
+		"/C/Users/User/reinforcement_learning/_mypractice/RL_for_everyone/kbhit.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/05_q_table_frozenlake.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/03_1_q_table_frozenlake_det.py",
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/1-policy-iteration/policy_iteration.py",
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/1-policy-iteration/environment.py",
+		"/C/Users/User/복습/kaggle/titanic/train.py",
+		"/C/Users/User/복습/DeepLearningZeroToAll-master/lab-07-4-mnist_introduction.py",
+		"/C/Users/User/복습/DeepLearningZeroToAll-master/lab-07-2-linear_regression_without_min_max.py",
+		"/C/Users/User/복습/4. neural_network.ipynb",
+		"/C/Users/User/.jupyter/custom/custom.js"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Assets/Scripts/PlayerController.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 635,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/User/reinforcement_learning/ml-agents-master/ml-agents-master/unity-environment/Assets/ML-Agents/Scripts/Agent.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7316,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1197,
+								1197
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 378.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 120.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.variable_get":
+	{
+		"height": 200.0
+	},
+	"pinned_build_system": "",
+	"project": "space shooter.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 267.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,0 +1,296 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"spawn",
+				"spawnPos"
+			],
+			[
+				"sp",
+				"spawnPos"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "sample.sublime-project",
+			"settings":
+			{
+				"buffer_size": 196,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/Spawner.cs",
+			"settings":
+			{
+				"buffer_size": 366,
+				"encoding": "UTF-8 with BOM",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Enable Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: li",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Install Package Control"
+			]
+		],
+		"width": 444.0
+	},
+	"console":
+	{
+		"height": 150.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/Project_drone/1_unity_sample/0_sample_rein_learn/Assets/Scripts"
+	],
+	"file_history":
+	[
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/6-deep-sarsa/deep_sarsa_agent.py",
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/6-deep-sarsa/environment.py",
+		"/D/3학기/NLP/nlp_final_assignment_toy_exam_v0.1/parsing_copy.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/06_q_net_frozenlake.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/03_2_q_table_frozenlake_det.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/05_0_q_table_frozenlake.py",
+		"/C/Users/User/reinforcement_learning/_mypractice/RL_for_everyone/1_practice_windows.py",
+		"/C/Users/User/reinforcement_learning/_mypractice/RL_for_everyone/kbhit.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/05_q_table_frozenlake.py",
+		"/C/Users/User/reinforcement_learning/ReinforcementZeroToAll-master/03_1_q_table_frozenlake_det.py",
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/1-policy-iteration/policy_iteration.py",
+		"/C/Users/User/reinforcement_learning/reinforcement-learning-kr-master/reinforcement-learning-kr-master/1-grid-world/1-policy-iteration/environment.py",
+		"/C/Users/User/복습/kaggle/titanic/train.py",
+		"/C/Users/User/복습/DeepLearningZeroToAll-master/lab-07-4-mnist_introduction.py",
+		"/C/Users/User/복습/DeepLearningZeroToAll-master/lab-07-2-linear_regression_without_min_max.py",
+		"/C/Users/User/복습/4. neural_network.ipynb",
+		"/C/Users/User/.jupyter/custom/custom.js"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "sample.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								188,
+								188
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Assets/Scripts/Spawner.cs",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 366,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								365,
+								365
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 120.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.variable_get":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "sample.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 131.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
