@@ -7,6 +7,8 @@ n_state_space = 1 인 겁나 간단하게 만든거.
 		  지금 TestAgent애서 movement 변수가 무한대로 갈 수 있게 되어있음
     궁금한 점: 카메라로 observation 결과도 넣어주는데, 여러 각도 카메라 몇 개를 설치하면 그나마 될려나
 			  카메라보다 state에 의존도가 훨씬 높은건가, 아니면 그 정도를 조절할 수 있나
-			  
+<update 12/06 13:15>
+n_state_space = 2 로 바꿈. obstable의 x 좌표값도 하나 추가
+-> 조금 학습 되기 시작하는듯 그래도 episode 지날수록 계속 좋아지지느 않음			  
 */
 
