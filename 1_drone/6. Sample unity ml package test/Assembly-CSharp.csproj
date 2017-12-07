@@ -83,6 +83,15 @@
      <Compile Include="Assets\ML-Agents\Template\Scripts\TestAgent.cs" />
      <Compile Include="Assets\ML-Agents\Template\Scripts\TestMonitor.cs" />
      <Compile Include="Assets\Readme.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\Drone\Component.cs" />
+     <Compile Include="Assets\Scripts\Drone\ControlReceiver.cs" />
+     <Compile Include="Assets\Scripts\Drone\ControlSignal.cs" />
+     <Compile Include="Assets\Scripts\Drone\InputControl.cs" />
+     <Compile Include="Assets\Scripts\Drone\MainBoard.cs" />
+     <Compile Include="Assets\Scripts\Drone\MotorsController.cs" />
+     <Compile Include="Assets\Scripts\Drone\MotorThrust.cs" />
+     <Compile Include="Assets\Scripts\Drone\ThrustSignal.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -111,19 +120,19 @@
  <HintPath>D:/unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="System.Numerics">
- <HintPath>D:/Project_drone/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/System.Numerics.dll</HintPath>
+ <HintPath>D:/GitHub/Unity_Practice/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/System.Numerics.dll</HintPath>
  </Reference>
  <Reference Include="System.ValueTuple">
- <HintPath>D:/Project_drone/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/System.ValueTuple.dll</HintPath>
+ <HintPath>D:/GitHub/Unity_Practice/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/System.ValueTuple.dll</HintPath>
  </Reference>
  <Reference Include="TensorFlowSharp.Android">
- <HintPath>D:/Project_drone/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/Android/TensorFlowSharp.Android.dll</HintPath>
+ <HintPath>D:/GitHub/Unity_Practice/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/Android/TensorFlowSharp.Android.dll</HintPath>
  </Reference>
  <Reference Include="TensorFlowSharp">
- <HintPath>D:/Project_drone/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/Computer/TensorFlowSharp.dll</HintPath>
+ <HintPath>D:/GitHub/Unity_Practice/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/Computer/TensorFlowSharp.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Project_drone/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/JSON/Newtonsoft.Json.dll</HintPath>
+ <HintPath>D:/GitHub/Unity_Practice/1_drone/6. Sample unity ml package test/Assets/ML-Agents/Plugins/JSON/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>C:/Users/User/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>

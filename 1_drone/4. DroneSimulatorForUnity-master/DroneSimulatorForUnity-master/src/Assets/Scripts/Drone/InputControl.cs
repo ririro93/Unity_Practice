@@ -11,7 +11,7 @@ public class InputControl : MonoBehaviour
 	{
 		ControlSignal signal = new ControlSignal ();
 		
-		signal.Throttle = Input.GetKey ("LeftY");
+		signal.Throttle = Input.GetAxis ("LeftY");
 		signal.Rudder = Input.GetAxis ("LeftX");
 		signal.Elevator = Input.GetAxis ("RightY");
 		signal.Aileron = Input.GetAxis ("RightX");

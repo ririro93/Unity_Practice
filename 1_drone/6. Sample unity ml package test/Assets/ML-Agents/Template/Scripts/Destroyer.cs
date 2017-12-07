@@ -18,4 +18,13 @@ public class Destroyer : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
+	public void OnCollisionEnter(Collision other) {
+		if(other.gameObject.tag == "Player") {
+			gameObject.SetActive(false);
+		}
+		if(other.gameObject.tag == "Ground") {
+			Destroy(gameObject);
+		}
+	}
 }

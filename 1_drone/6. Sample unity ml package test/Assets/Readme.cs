@@ -9,6 +9,7 @@ n_state_space = 1 인 겁나 간단하게 만든거.
 			  카메라보다 state에 의존도가 훨씬 높은건가, 아니면 그 정도를 조절할 수 있나
 <update 12/06 13:15>
 n_state_space = 2 로 바꿈. obstable의 x 좌표값도 하나 추가
--> 조금 학습 되기 시작하는듯 그래도 episode 지날수록 계속 좋아지지느 않음			  
+-> 조금 학습 되기 시작하는듯 그래도 episode 지날수록 계속 좋아지지느 않음	
+-> hyperparameter 수정: learning_rate=3e-4에서 1e-4로 낮추니까 reward증가가 좀 안정적으로 보임		  
 */
 

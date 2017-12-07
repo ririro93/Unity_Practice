@@ -70,7 +70,7 @@ public class TestAgent : Agent {
 		gameObject.transform.position = new Vector3(0, 0, 0);
 		gameObject.transform.rotation = Quaternion.identity;
 		movement = 0;
-		count = 3;
+		count = 2;
 	}
 
 	public override void AgentOnDone()	{
